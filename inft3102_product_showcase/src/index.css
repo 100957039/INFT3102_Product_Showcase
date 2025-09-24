@@ -1,68 +1,254 @@
+/* Week 3 - Day 2: Enhance styling for performance with optimized images ... */
+/* Uses Autoprefixer for compatibility and responsive design */
 :root {
+  --bg: #ffffff;
+  --text: #213547;
+  --muted: #6b7280;
+  --brand: #646cff;
+  --brand-600: #535bf2;
+  --surface: #f3f4f6;
+  --surface-2: #eef2f7;
+  --border: #e5e7eb;
+  --shadow: 0 1px 2px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.05);
+  --radius: 12px;
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
+  line-height: 1.6;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
+  color: var(--text);
+  background-color: var(--bg);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --surface: #111827;
+    --surface-2: #0b1220;
+    --border: #1f2937;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 6px 18px rgba(0,0,0,0.3);
+  }
+}
+
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  color: var(--brand);
+  text-decoration: none;
+  transition: color 0.15s ease, opacity 0.15s ease;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--brand-600);
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 2rem;
+  line-height: 1.2;
+  margin: 0 0 var(--space-2);
+}
+h2 {
+  margin: 0;
+}
+h3 {
+  margin: 0 0 var(--space-2);
+  color: var(--text);
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 0.55em 1em;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background-color: var(--surface);
+  color: var(--text);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: transform 0.05s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 button:hover {
-  border-color: #646cff;
+  background-color: var(--surface-2);
+  border-color: var(--brand);
 }
-button:focus,
+button:active {
+  transform: translateY(1px);
+}
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.app-container {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.header {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  color: white;
+  padding: var(--space-4);
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.navbar {
+  grid-column: 1 / -1;
+  background-color: #34495e;
+  padding: var(--space-2) var(--space-4);
+  box-shadow: var(--shadow);
+}
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.navbar li a {
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.navbar li a:hover,
+.navbar li a[aria-current="page"] {
+  background-color: rgba(255,255,255,0.12);
+}
+
+.sidebar {
+  grid-row: 3;
+  grid-column: 1;
+  background-color: var(--surface);
+  padding: var(--space-4);
+  border-right: 1px solid var(--border);
+}
+.sidebar h3 {
+  margin-bottom: var(--space-3);
+}
+.sidebar ul {
+  margin: 0;
+  padding-left: 1rem;
+  color: var(--muted);
+}
+
+.content {
+  grid-row: 3;
+  grid-column: 2;
+  padding: var(--space-5);
+  max-width: 1100px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.footer {
+  grid-column: 1 / -1;
+  background-color: #2c3e50;
+  color: white;
+  padding: var(--space-3);
+  text-align: center;
+}
+
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  box-shadow: var(--shadow);
+  margin-bottom: var(--space-4);
+}
+
+.counter,
+.post-form,
+.post-list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.post-form input {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  width: min(520px, 100%);
+}
+.post-form button {
+  width: fit-content;
+  min-height: 44px;
+}
+
+.post-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+.post-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface);
+}
+.post-list li button {
+  background: transparent;
+  border: 1px solid var(--border);
+  min-height: 44px;
+}
+
+/* Week 3 - Day 2: Style optimized images for performance ... */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius);
+}
+
+/* Week 3 - Day 2: Ensure responsive image sizing */
+@media (max-width: 900px) {
+  .app-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto 1fr auto;
   }
-  a:hover {
-    color: #747bff;
+  .sidebar {
+    grid-column: 1;
+    grid-row: 3;
+    padding: var(--space-3);
   }
-  button {
-    background-color: #f9f9f9;
+  .content {
+    grid-column: 1;
+    grid-row: 4;
+    padding: var(--space-3);
+    overflow-x: hidden;
+  }
+  .card {
+    padding: var(--space-2);
+    font-size: 0.9rem;
+  }
+  .post-form input {
+    width: 100%;
+    min-height: 44px;
   }
 }
