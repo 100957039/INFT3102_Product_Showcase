@@ -7,6 +7,7 @@ function NavBar( {links} ) {
             <ul>
                 {links.map((link, index) => (
                     <li key={index}>
+                        {/* Replace <a> with Link (React Router) for SPA/Client-Side Navigation */}
                         <Link to={link === 'Home' ? '/' : `/${link.toLowerCase()}`}
                               aria-current={link === 'Home' ? 'page' : undefined}>
                             {link}
