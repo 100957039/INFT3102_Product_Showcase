@@ -16,21 +16,52 @@
 
     <div class="app-container">
         <header class="header">
-            <h2>My Product Showcase</h2>
+            <h2>Product Showcase</h2>
         </header>
 
         <nav class="navbar" aria-label="main navigation">
             <ul>
                 <li><a href="#" aria-current="page">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Blog</a></li>
+                <li><a href="#">Products</a></li>
             </ul>
         </nav>
         <main class="content">
             <section class="card">
-                <h1>Hello React</h1>
-                <p>Welcome to our INFT 3102 Product Showcase.  All rights reserved</p>
-                <img src="/assets/images/placeholder.webp" alt="Blog Placeholder" width="300" height="200"/>
+                <h1>Welcome to the INFT 3102 Product Showcase</h1>
+                <img src="/assets/images/produce_display.webp" alt="Produce Display" width="600" height="400"/>
+            </section>
+
+            <section class="card">
+                <h1>Product List</h1>
+                <h3>Categories</h3>
+                <label>
+                    <select class="card">
+                        <option value="">All</option>
+                        <option value="fruits">Fruits</option>
+                        <option value="vegetables">Vegetables</option>
+                        <option value="dairy">Dairy</option>
+                    </select>
+                </label>
+                <section class="product-list">
+                    <h3>Products</h3>
+                    <ul>
+                        <li>
+                            <h3><span>Apple</span></h3>
+                            <img src="/assets/images/apple.webp" alt="Product Image" width="300" height="300"/>
+                            <button>View Details</button>
+                        </li>
+                        <li>
+                            <h3><span>Orange</span></h3>
+                            <img src="/assets/images/orange.webp" alt="Product Image" width="300" height="300"/>
+                            <button>View Details</button>
+                        </li>
+                        <li>
+                            <h3><span>Dragon Fruit</span></h3>
+                            <img src="/assets/images/dragon_fruit.webp" alt="Product Image" width="300" height="300"/>
+                            <button>View Details</button>
+                        </li>
+                    </ul>
+                </section>
             </section>
         </main>
         <footer class="footer">
