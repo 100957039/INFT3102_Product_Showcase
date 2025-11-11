@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { ProductContext } from "./ProductContext.js";
+import {createContext, useState} from 'react';
 
-export default function ProductProvider({ children }) {
+// Components will access data via useContext(ProductContext)
+export const ProductContext = createContext(null);
+
+export function ProductProvider({ children }) {
 
     const [products, setProducts] = useState([
         {id: 1, name: 'Apple', price: 0.50, description: "It's an apple.", category: "fruits", image: 'apple.webp'},
@@ -18,14 +20,9 @@ export default function ProductProvider({ children }) {
         {id: 12, name: 'Yogurt', price: 2.99, description: "It's yogurt.", category: "dairy", image: 'yogurt.webp'}
     ]);
 
-    const [filter, setFilter] = useState('');
-
-    const filteredProducts = products.filter(product =>
-        product.category === filter || filter === ''
-    );
 
     return (
-        <ProductContext.Provider value={{ products, filteredProducts, setFilter }}>
+        <ProductContext.Provider value={{ products, setProducts }}>
             {children}
         </ProductContext.Provider>
     );

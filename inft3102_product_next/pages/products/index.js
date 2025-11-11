@@ -7,7 +7,7 @@ import {useContext, useEffect} from "react";
 import {PostContext} from "@/components/PostContext";
 import {useRouter} from "next/router";
 
-export default function Home( {posts, error, page, totalPosts, totalPages} ) {
+function Blog( {posts, error, page, totalPosts, totalPages} ) {
 
     const {setPosts} = useContext(PostContext);
     const router = useRouter();
@@ -17,7 +17,7 @@ export default function Home( {posts, error, page, totalPosts, totalPages} ) {
     }, [posts, setPosts]);
 
     const handlePageChange = (newPage) => {
-        router.push(`/?page=${newPage}`);
+        router.push(`/blog?page=${newPage}`);
     }
 
     return (
@@ -25,7 +25,6 @@ export default function Home( {posts, error, page, totalPosts, totalPages} ) {
             <Header title="My Blog Platform" />
             <NavBar links={['Home', 'About', 'Blog']}/>
             <SideBar />
-
             <main className="content">
                 <section className="card">
                     <h1>Blog Posts</h1>
@@ -59,20 +58,23 @@ export async function getServerSideProps( {query} ) {
     const url = `https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/entries?content_type=${contentType}&access_token=${accessToken}&limit=${limit}&skip=${skip}`;
 
     try {
-
         console.log('Fetching posts from Contentful');
 
-        const res =
-            await fetch(url);
+        const response = await fetch(url);
 
-        if (!res.ok) {
-            const errorBody = await res.text();
-            throw new Error(`Failed to fetch posts ($\{res.status}): ${errorBody}`);
+        if (!response.ok) {
+            console.log('Failed to fetch Contentful posts', response.status, response.statusText);
+            throw new Error('Failed to fetch Contentful posts');
         }
 
-        const data = await res.json();
+        const data = await response.json();
+        console.log('Contentful API response', data);
+        if(!data.items || data.items.length === 0){
+            console.error('No published post found in Contentful response');
+            throw new Error('No published post found in Contentful response');
+        }
 
-        const posts = (data.items || []).map((item) => ({
+        const posts = data.items.slice(0, 5).map((item) => ({
             id: item.sys.id,
             title: item.fields.title,
             content: item.fields.body,
@@ -94,7 +96,7 @@ export async function getServerSideProps( {query} ) {
         };
 
     } catch(err){
-        console.error('Failed to fetch Contentful Posts: ', err.message);
+        console.error('Error in getServerSideProps()', err.message);
         return {
             props:{
                 posts: [],
@@ -106,3 +108,5 @@ export async function getServerSideProps( {query} ) {
         };
     }
 }
+
+export default Blog;
