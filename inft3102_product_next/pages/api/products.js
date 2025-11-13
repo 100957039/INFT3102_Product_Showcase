@@ -2,7 +2,6 @@ export default async function handler(req, res) {
 
     const SPACE = process.env.CONTENTFUL_SPACE_ID;
     const CDA_TOKEN = process.env.CONTENTFUL_ACCESS_TOKEN;
-    const CMA_TOKEN = process.env.CONTENTFUL_MANAGEMENT_TOKEN;
     const ENV = 'master';
 
 

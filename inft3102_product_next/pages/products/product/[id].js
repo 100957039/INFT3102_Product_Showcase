@@ -23,7 +23,7 @@ export default function ProductPage( {products} ) {
     );
 }
 
-export async function getServerSideProps( {query} ) {
+export async function getServerSideProps() {
     const spaceId = process.env.CONTENTFUL_SPACE_ID;
     const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
     const envId = process.env.CONTENTFUL_ENV || 'master';
