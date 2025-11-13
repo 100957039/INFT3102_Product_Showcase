@@ -1,13 +1,13 @@
 import "@/styles/index.css";
 import {ProductProvider} from "@/components/ProductContext.js";
-import {CategoryProvider} from "@/components/CategoryContext";
+import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps}) {
     return (
         <ProductProvider>
-            <CategoryProvider>
+            <Layout>
                 <Component {...pageProps} />
-            </CategoryProvider>
+            </Layout>
         </ProductProvider>
     )
 }

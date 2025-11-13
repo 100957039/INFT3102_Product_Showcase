@@ -1,54 +1,82 @@
-
-import { PostContext } from "@/components/ProductContext.js";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
+import {ProductContext} from "@/components/ProductContext";
 import {useRouter} from "next/router";
-import SideBar from "@/components/SideBar";
-import NavBar from "@/components/NavBar";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Image from "next/image";
+import ProductDetail from "@/components/ProductDetail";
 
-export default function PostDetail() {
-
-    const { posts } = useContext(PostContext);
+export default function ProductPage( {products} ) {
+    const {setProducts} = useContext(ProductContext);
     const router = useRouter();
     const { id } = router.query;
 
-    console.log('PostDetails: Router query ID', id);
-    console.log('PostDetails: PostContext posts:', posts);
-
-    const post = id ? posts.find(post => post.id === parseInt(id)) : null;
+    useEffect(() => {
+        if(products) setProducts(products);
+    }, [products, setProducts]);
 
     return (
-        <div className="app-container">
-            <Header title="My Blog Platform" />
-            <NavBar links={['Home', 'About', 'Blog']}/>
-            <SideBar />
-            <main className="content">
-                <section className="card">
-                    { post ? (
-                        <div>
-                            <h2>{post.title}</h2>
-                            <p>By {post.author}</p>
-                            <p>{post.content}</p>
-                            {post.image && (
-                                <Image
-                                    src={post.image}
-                                    alt={post.title}
-                                    width={600}
-                                    height={400}
-                                    layout="responsive"
-                                />
-                            )}
-                        </div>
-                    ) : (
-                        <>
-                            <p>Post Not Found (ID {id})</p>
-                        </>
-                    )}
-                </section>
-            </main>
-            <Footer />
-        </div>
+        <>
+            <section className="card">
+                <ProductDetail
+                    id={id}
+                />
+            </section>
+        </>
     );
+}
+
+export async function getServerSideProps( {query} ) {
+    const spaceId = process.env.CONTENTFUL_SPACE_ID;
+    const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
+    const envId = process.env.CONTENTFUL_ENV || 'master';
+    const contentType = 'product';
+
+    const url = `https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/entries?content_type=${contentType}&access_token=${accessToken}`;
+
+    try {
+        console.log('Fetching products from Contentful');
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            console.log('Failed to fetch Contentful products', response.status, response.statusText);
+            throw new Error('Failed to fetch Contentful products');
+        }
+
+        const data = await response.json();
+        console.log('Contentful API response', data);
+        if(!data.items || data.items.length === 0){
+            console.error('No published product found in Contentful response');
+            throw new Error('No published product found in Contentful response');
+        }
+
+        const products = data.items.map((item) => {
+            const imageId = item.fields.image?.sys?.id;
+            const asset = data.includes?.Asset?.find(a => a.sys.id === imageId);
+
+            return {
+                id: item.sys.id,
+                name: item.fields.name,
+                price: item.fields.price,
+                vendor: item.fields.vendor,
+                description: item.fields.description,
+                category: item.fields.category,
+                image: `https:${asset.fields.file.url}` || null
+            };
+        });
+
+        return {
+            props:{
+                products,
+                error: null,
+            }
+        };
+
+    } catch(err){
+        console.error('Error in getServerSideProps()', err.message);
+        return {
+            props:{
+                products: [],
+                error: 'Failed to fetch products: ' + err.message,
+            }
+        };
+    }
 }

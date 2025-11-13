@@ -228,6 +228,19 @@ button:focus-visible {
     min-height: 44px;
 }
 
+.no-link-style {
+    color: inherit;
+    text-decoration: none;
+}
+
+.no-link-style:hover,
+.no-link-style:focus,
+.no-link-style:active,
+.no-link-style:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
 img {
     max-width: 100%;
     height: auto;
