@@ -1,6 +1,12 @@
+/* styles/index.css */
 /* Week 7 - Day 1: Uses existing .navbar styles */
 /* Week 9 - Day 1: Added pagination styles */
-/* ✅ Week 10 - Day 1: Added styling for select dropdown in PostForm */
+/* Week 10 - Day 1: Added styling for select dropdown in PostForm */
+/* Week 10 - Day 2: Added styling for PostFilter component */
+/* Week 11 - Day 1: Perfect alignment for PostForm */
+/* Week 11 - Day 2: Added active navigation state + enhanced hover */
+/* Week 12 - Day 1: Added auth form + admin UI styles */
+
 :root {
     --bg: #ffffff;
     --text: #213547;
@@ -53,20 +59,9 @@ body {
     min-height: 100vh;
 }
 
-h1 {
-    font-size: 2rem;
-    line-height: 1.2;
-    margin: 0 0 var(--space-2);
-}
-
-h2 {
-    margin: 0;
-}
-
-h3 {
-    margin: 0 0 var(--space-2);
-    color: var(--text);
-}
+h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 var(--space-2); }
+h2 { margin: 0; }
+h3 { margin: 0 0 var(--space-2); color: var(--text); }
 
 button {
     border-radius: 10px;
@@ -134,10 +129,15 @@ button:focus-visible {
     min-height: 44px;
     display: flex;
     align-items: center;
+    transition: background-color 0.2s ease;
 }
 
-.navbar li a:hover, .navbar li a[aria-current="page"] {
-    background-color: rgba(255,255,255,0.12);
+/* Week 11 - Day 2: Active + enhanced hover state */
+.navbar li a:hover,
+.navbar li a[aria-current="page"],
+.navbar li a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-weight: 600;
 }
 
 .sidebar {
@@ -184,23 +184,47 @@ button:focus-visible {
     margin-bottom: var(--space-4);
 }
 
-.counter, .post-form, .post-list {
+.counter,
+.post-form,
+.post-list,
+.post-filter {
     display: grid;
     gap: var(--space-2);
 }
 
-.post-form input {
+/* Week 11 - Day 1: Perfect alignment for PostForm */
+.post-form select,
+.post-form input,
+.post-form button {
+    width: 100%;
+    max-width: 520px;
+    margin-bottom: var(--space-2);
     padding: 0.55rem 0.75rem;
     border: 1px solid var(--border);
     border-radius: 10px;
     background: var(--surface);
     color: var(--text);
-    width: min(520px, 100%);
+    font-size: 0.95rem;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.post-form select:hover,
+.post-form input:hover,
+.post-form button:hover {
+    background: var(--surface-2);
+    border-color: var(--brand);
+}
+
+.post-form select:focus,
+.post-form input:focus,
+.post-form button:focus {
+    outline: 3px solid var(--brand);
+    outline-offset: 2px;
 }
 
 .post-form button {
-    width: fit-content;
-    min-height: 44px;
+    cursor: pointer;
+    font-weight: 600;
 }
 
 .post-list ul {
@@ -222,23 +246,10 @@ button:focus-visible {
     background: var(--surface);
 }
 
-.post-list li button {
+.post-list>li button {
     background: transparent;
     border: 1px solid var(--border);
     min-height: 44px;
-}
-
-.no-link-style {
-    color: inherit;
-    text-decoration: none;
-}
-
-.no-link-style:hover,
-.no-link-style:focus,
-.no-link-style:active,
-.no-link-style:visited {
-    color: inherit;
-    text-decoration: none;
 }
 
 img {
@@ -265,27 +276,92 @@ img {
     cursor: not-allowed;
 }
 
-/* ✅ Week 10 - Day 1: Style select dropdown in post-form */
-.post-form select {
+/* Week 10 - Day 2: Style post-filter component */
+.post-filter {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+}
+
+.post-filter select {
     padding: 0.55rem 0.75rem;
     border: 1px solid var(--border);
     border-radius: 10px;
     background: var(--surface);
     color: var(--text);
-    width: min(520px, 100%);
     font-size: 0.95rem;
     cursor: pointer;
     transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
-.post-form select:hover {
+.post-filter select:hover {
     background: var(--surface-2);
     border-color: var(--brand);
 }
 
-.post-form select:focus {
+.post-filter select:focus {
     outline: 3px solid var(--brand);
     outline-offset: 2px;
+}
+
+.post-filter button {
+    min-height: 44px;
+}
+
+/* Week 12 - Day 1: NEW – Login form in navbar */
+.login-form {
+    display: flex;
+    gap: var(--space-1);
+    align-items: center;
+}
+
+.login-form input {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+    min-height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.login-form input:focus {
+    outline: 2px solid var(--brand);
+    outline-offset: 1px;
+}
+
+.login-form button {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+    min-height: 36px;
+}
+
+/* Week 12 - Day 1: NEW – Admin panel & edit buttons */
+.admin-link,
+.edit-link,
+.delete-btn {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+    min-height: 32px;
+    margin-left: 0.5rem;
+}
+
+.admin-link {
+    background: var(--brand);
+    color: white;
+    border-color: var(--brand);
+}
+
+.delete-btn {
+    background: #dc2626;
+    color: white;
+    border-color: #dc2626;
+}
+
+.edit-link {
+    background: #f59e0b;
+    color: white;
+    border-color: #f59e0b;
 }
 
 @media (max-width: 900px) {
@@ -293,24 +369,40 @@ img {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto 1fr auto;
     }
+
     .sidebar {
         grid-column: 1;
         grid-row: 3;
         padding: var(--space-3);
     }
+
     .content {
         grid-column: 1;
         grid-row: 4;
         padding: var(--space-3);
         overflow-x: hidden;
     }
+
     .card {
         padding: var(--space-2);
         font-size: 0.9rem;
     }
+
     .post-form input,
-    .post-form select {
+    .post-form select,
+    .post-filter select {
         width: 100%;
         min-height: 44px;
+    }
+
+    /* Week 12 - Day 1: Mobile login form */
+    .login-form {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .login-form input,
+    .login-form button {
+        width: 100%;
     }
 }
