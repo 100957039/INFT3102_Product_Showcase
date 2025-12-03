@@ -8,25 +8,25 @@ const users = [
     {
         id: '1',
         email: 'admin@dc.ca',
-        password: '$2b$10$Q3fFcxSjBufrCuH19MrAKu4awXj2.hoLemrfWg.Ve10F4p/fVdL.i',
+        password: '$2b$10$GbTmkGSo1sjIo03uAu1NUOgaH8TrN5YJFXTc3nDLxP8DWUOnGOSjG',
         role: 'admin'
     },
     {
         id: '2',
         email: 'vendorA@dc.ca',
-        password: '$2a$10$tbfgg7BTRNaBE4DQ1mJuQe9sESrftkbI0S.j.vhUC1FhCIEihxWYO',
+        password: '$2b$10$uDiPa.dU3/A1aWKpzuhf2e.goyie4a3zGaGHtjOfMgARbQSaCNbli',
         role: 'vendor'
     },
     {
         id: '3',
         email: 'vendorB@dc.ca',
-        password: '$2a$10$2EUXgAYyhw9yVedB2U5YRuPUjUA9qDjQ8yZA.RpQ9O0gdXZ.JDCdm',
+        password: '$2b$10$MBBDafKSw7Qt2IAO/lDQfePLjMUtLqE6V3/cwInZps5Exphsc2SZ6',
         role: 'vendor'
     },
     {
         id: '4',
         email: 'vendorC@dc.ca',
-        password: '$2a$10$VKNhKNlR8mSIlwxqXL2OVOYaLsLFkexDv.9fHl9YGpEd4D6KRQTyi',
+        password: '$2b$10$M/9nwOKoVTKIHeIUoRftPeMm7cVi9kKh7b98QGjq7QwRizPOOg1Ni',
         role: 'vendor'
     }
 ];
