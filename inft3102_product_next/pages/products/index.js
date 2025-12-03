@@ -26,6 +26,7 @@ function Products( {products, error, page, totalProducts, totalPages} ) {
                     <p role="alert">{error}</p>
                 ) : (
                     <ProductList
+                        products={products}
                         page={page}
                         totalProducts={totalProducts}
                         totalPages={totalPages}

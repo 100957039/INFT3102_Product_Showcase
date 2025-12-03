@@ -211,7 +211,7 @@ export default async function handler(req, res) {
             if(!id) return res.status(400).json({error: 'Id is Required'});
 
             try{
-                const getResponse = await(`http://localhost:3000/api/products`);
+                const getResponse = await fetch(`http://localhost:3000/api/products`);
                 const products = await getResponse.json();
                 const product = products.find(p => p.id === id);
                 if(!product) return res.status(404).json({error: 'No product found with id '});

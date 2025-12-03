@@ -38,7 +38,7 @@ export async function getServerSideProps({params, query}) {
     const skip = (page - 1) * limit;
     const category = params.category;
 
-    const url = `https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/entries?content_type=${contentType}&access_token=${accessToken}&limit=${limit}&skip=${skip}&fields.categories=${encodeURIComponent(category)}`;
+    const url = `https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/entries?content_type=${contentType}&access_token=${accessToken}&limit=${limit}&skip=${skip}&fields.category=${encodeURIComponent(category)}`;
 
     try{
         console.log('Fetching products from Contentful for category', category);

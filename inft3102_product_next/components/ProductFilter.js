@@ -11,6 +11,8 @@ export default function ProductFilter() {
     const handleFilter = () => {
         if (selectedCategory) {
             router.push(`/categories/${encodeURIComponent(selectedCategory)}`);
+        } else {
+            router.push(`/products`);
         }
     };
 
@@ -26,7 +28,7 @@ export default function ProductFilter() {
                     ))
                 }
             </select>
-            <button onClick={handleFilter} disabled={!selectedCategory}>Filter</button>
+            <button onClick={handleFilter}>Filter</button>
         </div>
     )
 

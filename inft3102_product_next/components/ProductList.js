@@ -15,7 +15,7 @@ export default function ProductList({
     const { user } = useContext(AuthContext);
     
     
-    const products = propProducts || contextProducts || [];
+    const products = contextProducts || [];
 
     const handleRemove = (productId) => {
         if(setProducts) {
@@ -27,7 +27,7 @@ export default function ProductList({
         if (!confirm('Delete this product?')) return;
 
         try {
-            const res = await fetch(`/api/products?productId=${productId}`, {method: 'DELETE'});
+            const res = await fetch(`/api/products?id=${productId}`, {method: 'DELETE'});
             if (res.ok) {
                 handleRemove(productId);
             } else {

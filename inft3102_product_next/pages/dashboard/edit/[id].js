@@ -57,7 +57,7 @@ export default function EditProduct() {
 
         fetchProduct();
 
-    }, [id, user, loading, router, categories]);
+    }, [id, user, loading]);
 
 
     const handleSubmit = async (e) => {
@@ -68,7 +68,7 @@ export default function EditProduct() {
         setError('');
 
         try{
-            const response = await fetch(`/api/products/${id}`, {
+            const response = await fetch(`/api/products`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
