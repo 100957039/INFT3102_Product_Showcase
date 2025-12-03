@@ -1,6 +1,5 @@
 import {createContext, useState} from 'react';
 
-// Components will access data via useContext(ProductContext)
 export const ProductContext = createContext(null);
 
 export function ProductProvider({ children }) {
