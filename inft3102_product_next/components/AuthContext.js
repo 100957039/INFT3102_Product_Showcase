@@ -1,13 +1,13 @@
 import {createContext, useEffect, useState} from "react";
 
-export const VendContext = createContext(null);
+export const AuthContext = createContext(null);
 
-export function VendProvider( {children} ){
+export function AuthProvider( {children} ){
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect( () => {
-        fetch('/api/vend/me')
+        fetch('/api/auth/me')
             .then(r => r.ok ? r.json() : null)
             .then(data => {
                 setUser(data?.user || null);
@@ -18,7 +18,7 @@ export function VendProvider( {children} ){
 
 
     const login = (email, password) => {
-        return fetch('/api/vend/login', {
+        return fetch('/api/auth/login', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({email, password}),
@@ -31,14 +31,14 @@ export function VendProvider( {children} ){
     };
 
     const logout = () => {
-        return fetch('/api/vend/logout')
+        return fetch('/api/auth/logout')
             .then(() => setUser(null));
     };
 
     return (
-        <VendContext.Provider value={{user, login, logout, loading}}>
+        <AuthContext.Provider value={{user, login, logout, loading}}>
             {children}
-        </VendContext.Provider>
+        </AuthContext.Provider>
     );
 
 }

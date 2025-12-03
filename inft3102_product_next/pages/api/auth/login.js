@@ -3,12 +3,10 @@ const cookie = require('cookie');
 
 export default function handler(req, res){
 
-    //Only Permit POST requests for LOGIN
     if(req.method !== 'POST'){
         return res.status(405).end();
     }
 
-    //Retrieve email and password from Login form body
     const { email, password } = req.body;
     const user = findUserByEmail(email);
 

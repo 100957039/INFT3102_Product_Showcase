@@ -1,12 +1,12 @@
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {VendContext} from "@/components/VendContext";
+import {AuthContext} from "@/components/AuthContext";
 import LoginForm from "@/components/LoginForm";
 import {useContext} from "react";
 
 export default function NavBar({ links }) {
     const router = useRouter();
-    const {user, logout} = useContext(VendContext);
+    const {user, logout} = useContext(AuthContext);
 
     const { pathname } = router || {};
 

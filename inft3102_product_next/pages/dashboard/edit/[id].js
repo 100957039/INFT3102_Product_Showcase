@@ -1,11 +1,11 @@
 import {useContext, useEffect, useState} from "react";
-import {VendContext} from "@/components/VendContext";
+import {AuthContext} from "@/components/AuthContext";
 import {CategoryContext} from "@/components/CategoryContext";
 import {useRouter} from "next/router";
 
 export default function EditPost() {
 
-    const {user, loading} = useContext(VendContext);
+    const {user, loading} = useContext(AuthContext);
     const {categories} = useContext(CategoryContext);
     const router = useRouter();
     const id = router.query;

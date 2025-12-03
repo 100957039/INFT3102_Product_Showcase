@@ -1,11 +1,11 @@
 import {useContext, useState} from "react";
-import {VendContext} from "@/components/VendContext";
+import {AuthContext} from "@/components/AuthContext";
 
 export default function LoginForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {login} = useContext(VendContext);
+    const {login} = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

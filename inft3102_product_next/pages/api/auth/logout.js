@@ -5,7 +5,7 @@ export default function handler(req, res){
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
-        maxAge: 0,   //Expire this cookie immediately
+        maxAge: 0,
         path: '/'
     }));
 

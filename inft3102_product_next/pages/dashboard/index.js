@@ -1,11 +1,11 @@
-import {VendContext} from "@/components/VendContext";
+import {AuthContext} from "@/components/AuthContext";
 import {useContext, useEffect} from "react";
 import {useRouter} from "next/router";
 import Link from "next/link";
 
 export default function AdminDashboard() {
 
-    const { user, loading } = useContext(VendContext);
+    const { user, loading } = useContext(AuthContext);
     const router = useRouter();
 
     //Redirect non-admins or unauthenticated users

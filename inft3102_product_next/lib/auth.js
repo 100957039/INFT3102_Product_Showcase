@@ -13,9 +13,21 @@ const users = [
     },
     {
         id: '2',
-        email: 'vendor@dc.ca',
-        password: '$2b$10$hLoRMSGjOaahxxYkbcS7ZeY/mKPSJToSyT0/htByOIZYs.ZLueXnG',
-        role: 'author'
+        email: 'vendorA@dc.ca',
+        password: '$2a$10$tbfgg7BTRNaBE4DQ1mJuQe9sESrftkbI0S.j.vhUC1FhCIEihxWYO',
+        role: 'vendor'
+    },
+    {
+        id: '3',
+        email: 'vendorB@dc.ca',
+        password: '$2a$10$2EUXgAYyhw9yVedB2U5YRuPUjUA9qDjQ8yZA.RpQ9O0gdXZ.JDCdm',
+        role: 'vendor'
+    },
+    {
+        id: '4',
+        email: 'vendorC@dc.ca',
+        password: '$2a$10$VKNhKNlR8mSIlwxqXL2OVOYaLsLFkexDv.9fHl9YGpEd4D6KRQTyi',
+        role: 'vendor'
     }
 ];
 

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ProductContext } from "./ProductContext.js";
 import {useContext} from "react";
 import Link from "next/link";
-import {VendContext} from "@/components/VendContext";
+import {AuthContext} from "@/components/AuthContext";
 
 export default function ProductList({
                                         products: propProducts,
@@ -12,7 +12,7 @@ export default function ProductList({
                                         onPageChange
                                     }) {
     const { products: contextProducts, setProducts } = useContext(ProductContext)
-    const { user } = useContext(VendContext);
+    const { user } = useContext(AuthContext);
     
     
     const products = propProducts || contextProducts || [];
