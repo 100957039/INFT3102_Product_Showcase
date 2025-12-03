@@ -3,17 +3,18 @@ import {AuthContext} from "@/components/AuthContext";
 import {CategoryContext} from "@/components/CategoryContext";
 import {useRouter} from "next/router";
 
-export default function EditPost() {
+export default function EditProduct() {
 
     const {user, loading} = useContext(AuthContext);
     const {categories} = useContext(CategoryContext);
     const router = useRouter();
     const id = router.query;
 
-    const [post, setPost] = useState(null)
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
-    const [author, setAuthor] = useState('');
+    const [product, setProduct] = useState(null)
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
+    const [vendor, setVendor] = useState('');
     const [category, setCategory] = useState('');
     const [error, setError] = useState('');
     const [saving, setSaving] = useState(false);
@@ -25,63 +26,64 @@ export default function EditPost() {
             return;
         }
 
-        const fetchPost = async () => {
+        const fetchProduct = async () => {
             try {
-                const response = await fetch('/api/posts');
-                const posts = await response.json();
-                const found = posts.find(p => p.id === id);
+                const response = await fetch('/api/products');
+                const products = await response.json();
+                const found = products.find(p => p.id === id);
 
                 if (!found) {
-                    setError('Post not found');
+                    setError('Product not found');
                     return;
                 }
 
-                if (found.author !== user.email && user.role !== 'admin') {
-                    setError('You can only edit your own posts')
+                if (found.vendor !== user.email && user.role !== 'admin') {
+                    setError('You can only edit your own products')
                     return;
                 }
 
-                setPost(found);
-                setTitle(found.title);
-                setBody(found.body);
-                setAuthor(found.author);
+                setProduct(found);
+                setName(found.name);
+                setPrice(found.price);
+                setDescription(found.description);
+                setVendor(found.vendor);
                 setCategory(found.category);
             } catch (err) {
-                setError('Failed to load Post');
+                setError('Failed to load Product');
             }
 
         };
 
-        fetchPost();
+        fetchProduct();
 
     }, [id, user, loading, router, categories]);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!title || !body) return setError('Title and body are required');
+        if(!name || !price || !description) return setError('Name, price, and description are required');
 
         setSaving(true);
         setError('');
 
         try{
-            const response = await fetch(`/api/posts/${id}`, {
+            const response = await fetch(`/api/products/${id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
-                    body: JSON.stringify({id, title, body, author, category}),
+                    body: JSON.stringify({id, name, price, description, vendor, category}),
                 }
             });
 
             if(response.ok){
-                router.push('/blog');
+                router.push('/products');
             }else{
                 const data = await response.json();
-                setError(data.error || 'Failed to Update Post');
+                setError(data.error || 'Failed to Update Product');
             }
 
         }catch(err){
-            setError('Network Issue. Failed to Update Post');
+            setError('Network Issue. Failed to Update Product');
         }finally{
             setSaving(false);
         }
@@ -89,24 +91,35 @@ export default function EditPost() {
 
     if(loading) return <p>Loading...</p>
     if(error) return <section className="card"><p> style={{color: 'red'}}</p>{error}</section>
-    if(!post) return <p>Loading Post...</p>
+    if(!product) return <p>Loading Product...</p>
 
     return (
         <section className="card">
-            <h1>Edit Post</h1>
-            <form onSubmit={handleSubmit} className="post-form">
+            <h1>Edit Product</h1>
+            <form onSubmit={handleSubmit} className="product-form">
 
                 <input
                     type="text"
-                    placeholder="Title"
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                    required/>
+                    placeholder="Name"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    required
+                />
+
+                <input
+                    type="number"
+                    placeholder="Price"
+                    min="0"
+                    step="0.01"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    required
+                />
 
                 <textarea
-                    placeholder="Content"
-                    value={body}
-                    onChange={e => setBody(e.target.value)}
+                    placeholder="Description"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
                     rows={10}
                     required
                     style={{ width: '100%', padding: '0.75rem', borderRadius: '10px', border: '1px solid var(--border)' }}
@@ -114,9 +127,9 @@ export default function EditPost() {
 
                 <input
                     type="text"
-                    placeholder="Author"
-                    value={author}
-                    onChange={e => setAuthor(e.target.value)}
+                    placeholder="Vendor"
+                    value={vendor}
+                    onChange={e => setVendor(e.target.value)}
                     readOnly
                     style={{ background: '#f5f5f5'}}/>
 
@@ -127,7 +140,7 @@ export default function EditPost() {
                 </select>
 
                 <button type="submit" disabled={saving}>
-                    {saving ? 'Saving' : 'Update Post'}
+                    {saving ? 'Saving' : 'Update Product'}
                 </button>
 
             </form>

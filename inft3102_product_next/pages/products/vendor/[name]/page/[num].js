@@ -1,47 +1,40 @@
-import {PostContext} from "@/components/PostContext";
+import {ProductContext} from "@/components/ProductContext";
 import {useContext, useEffect} from "react";
-import PostList from "@/components/PostList";
+import ProductList from "@/components/ProductList";
 
-export default function AuthorPage( {posts, author, page}) {
+export default function VendorPage( {products, vendor, page}) {
 
-    const {setPosts} = useContext(PostContext);
+    const {setProducts} = useContext(ProductContext);
 
-    // This runs only in the browser
-    // We populate global context so other components (like filters) can access posts
     useEffect( () => {
-        if(posts) setPosts(posts);
-    },  [posts, setPosts]);
+        if(products) setProducts(products);
+    },  [products, setProducts]);
 
     return (
         <section className="card">
-            <h1>Posts by {author} - Page {page}</h1>
-            <PostList
-                posts={posts}
+            <h1>Products by {vendor} - Page {page}</h1>
+            <ProductList
+                products={products}
                 page={page}
-                totalPosts={posts.length}
+                totalProducts={products.length}
                 totalPages={1}
             />
         </section>
     );
 }
 
-// This is where SSR + Nested Routing Happens
-// getServerSideProps = run on every request
-// This makes it Server-Side Rendered (SSR)
 export async function getServerSideProps( {params} ){
 
     const {name} = params;
     const res = await
-        fetch(`http://localhost:3000/api/posts?author=${encodeURIComponent(name)}`);
+        fetch(`http://localhost:3000/api/products?vendor=${encodeURIComponent(name)}`);
 
-    const posts = await res.json();
+    const products = await res.json();
     return {
         props: {
-            posts,
-            author: name,
+            products,
+            vendor: name,
             page: '1'
         }
     }
-
-
 }

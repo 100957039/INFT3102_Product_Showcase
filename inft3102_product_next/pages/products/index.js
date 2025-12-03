@@ -1,4 +1,5 @@
 import ProductList from "@/components/ProductList.js";
+import ProductFilter from "@/components/ProductFilter";
 import {useContext, useEffect} from "react";
 import {ProductContext} from "@/components/ProductContext";
 import {useRouter} from "next/router";
@@ -20,6 +21,7 @@ function Products( {products, error, page, totalProducts, totalPages} ) {
         <>
             <section className="card">
                 <h1>Products</h1>
+                <ProductFilter />
                 { error ? (
                     <p role="alert">{error}</p>
                 ) : (
@@ -47,8 +49,6 @@ export async function getServerSideProps( {query} ) {
     const url = `https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/entries?content_type=${contentType}&access_token=${accessToken}&limit=${limit}&skip=${skip}`;
 
     try {
-        console.log('Fetching products from Contentful');
-
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -63,7 +63,7 @@ export async function getServerSideProps( {query} ) {
             throw new Error('No published product found in Contentful response');
         }
 
-        const products = data.items.slice(0, 5).map((item) => {
+        const products = (data.items || []).map((item) => {
             const imageId = item.fields.image?.sys?.id;
             const asset = data.includes?.Asset?.find(a => a.sys.id === imageId);
 

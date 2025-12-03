@@ -29,17 +29,20 @@ export default async function handler(req, res) {
                 throw new Error('Failed to fetch Contentful products: ' + response.statusText);
             }
 
-            const data = await response.json();
-            const products = (data.items || []).map(item => ({
-                id: item.sys.id,
-                name: item.fields.name,
-                price: item.fields.price,
-                vendor: item.fields.vendor,
-                description: item.fields.description,
-                category: item.fields.category,
-                image: item.fields.image?.fields?.file?.url || null,
-                sys: {version: item.sys.version}
-            }));
+            const products = data.items.slice(0, 5).map((item) => {
+                const imageId = item.fields.image?.sys?.id;
+                const asset = data.includes?.Asset?.find(a => a.sys.id === imageId);
+
+                return {
+                    id: item.sys.id,
+                    name: item.fields.name,
+                    price: item.fields.price,
+                    vendor: item.fields.vendor,
+                    description: item.fields.description,
+                    category: item.fields.category,
+                    image: `https:${asset.fields.file.url}` || null
+                };
+            });
 
             return res.status(200).json(products);
 

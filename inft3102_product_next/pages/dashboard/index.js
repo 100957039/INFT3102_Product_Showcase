@@ -8,14 +8,13 @@ export default function AdminDashboard() {
     const { user, loading } = useContext(AuthContext);
     const router = useRouter();
 
-    //Redirect non-admins or unauthenticated users
     useEffect( () => {
         if(!loading){
             if(!user){
-                router.push("/");     //redirect user to home if not logged in
+                router.push("/");
             }else if(user.role !== 'admin'){
                 alert('Access denied! Admin Only');
-                router.push("/");     //redirect user to home if not logged in
+                router.push("/");
             }
         }
     }, [user, loading, router]);
@@ -40,24 +39,10 @@ export default function AdminDashboard() {
 
             <div style={{ marginTop: '1.5rem', display: 'grid', gap: '1rem'}}>
                 <h3>Quick Actions</h3>
-                <Link href="/blog" style={{ width: '100%', textAlign: 'left' }}>
-                    <button>View All Posts</button>
+                <Link href="/products" style={{ width: '100%', textAlign: 'left' }}>
+                    <button>View All Products</button>
                 </Link>
-
-                {/* Future Expansion */}
-                <button disabled style={{ opacity: 0.5}}>Manage User  (Coming Soon - Possibly in 12.2)</button>
-                <button disabled style={{ opacity: 0.5}}>Site Setting (Coming Soon - Possibly in 13.1)</button>
             </div>
-
-            <div style={{ marginTop: '2rem', padding: '1rem', backgroundColor: '#f0f9ff', borderRadius: '8px', fontSize: '0.9rem' }}>
-                <p><strong>Admin Tips:</strong></p>
-                <ul style={{ margin: '0.5rem 0', paddingLeft: '1.2rem' }}>
-                    <li>You can edit or delete <strong>any</strong> post from the blog pages</li>
-                    <li>Authors can only edit/delete their own posts</li>
-                    <li>All actions  are secured with JWT (JSON Web Tokens) + RBAC</li>
-                </ul>
-            </div>
-
         </section>
 
     )

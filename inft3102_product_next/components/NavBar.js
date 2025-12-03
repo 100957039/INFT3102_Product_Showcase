@@ -41,10 +41,10 @@ export default function NavBar({ links }) {
                 </li>
                 <li>
                     <Link
-                        href="/products/vendor/John/page/1"
+                        href="/products/vendor/vendorA@dc.ca/page/1"
                         className={isActive('/products/vendor') ? 'active' : ''}
                         aria-current={isActive('/products/vendor') ? 'page' : undefined}>
-                        Vendor (Route)
+                        Vendor
                     </Link>
                 </li>
 

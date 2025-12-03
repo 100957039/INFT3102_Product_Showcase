@@ -1,26 +1,26 @@
-import {PostContext} from "@/components/PostContext";
+import {ProductContext} from "@/components/ProductContext";
 import {useContext, useEffect} from "react";
 import ProductFilter from "@/components/ProductFilter";
-import PostList from "@/components/PostList";
+import ProductList from "@/components/ProductList";
 
-export default function CategoryPage( {posts, error, category, page, totalPosts, totalPages} ) {
+export default function CategoryPage( {products, error, category, page, totalProducts, totalPages} ) {
 
-    const {setPost} = useContext(PostContext);
+    const {setProducts} = useContext(ProductContext);
 
     useEffect(() => {
-        if(posts) setPost(posts);
-    },  [posts, setPosts])
+        if(products) setProducts(products);
+    },  [products, setProducts])
 
 
     return (
         <div className="content">
             <section className="card">
-                <h1>Posts in {category}</h1>
+                <h1>Products in {category}</h1>
                 <ProductFilter />
                 {error ? (
                     <p role="alert">{error}</p>
                     ) : (
-                        <PostList page={page} totalPosts={totalPosts} totalPages={totalPages} />
+                        <ProductList page={page} totalProducts={totalProducts} totalPages={totalPages} />
                     )
                 }
             </section>
@@ -32,7 +32,7 @@ export async function getServerSideProps({params, query}) {
     const spaceId = process.env.CONTENTFUL_SPACE_ID;
     const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
     const envId = process.env.CONTENTFUL_ENV || 'master';
-    const contentType = 'post';
+    const contentType = 'product';
     const limit = 5;
     const page = parseInt(query.page || '1', 10);
     const skip = (page - 1) * limit;
@@ -41,48 +41,52 @@ export async function getServerSideProps({params, query}) {
     const url = `https://cdn.contentful.com/spaces/${spaceId}/environments/${envId}/entries?content_type=${contentType}&access_token=${accessToken}&limit=${limit}&skip=${skip}&fields.categories=${encodeURIComponent(category)}`;
 
     try{
-        console.log('Fetching posts from Contentful for category', category);
+        console.log('Fetching products from Contentful for category', category);
         const response = await fetch(url);
 
         if(!response.ok){
-            console.log('Failed to fetch posts from Contentful for category', category);
-            throw new Error('Failed to fetch Contentful posts for category');
+            console.log('Failed to fetch products from Contentful for category', category);
+            throw new Error('Failed to fetch Contentful products for category');
         }
-        const data = await response.json();
-        const posts = (data.items || []).map((item) => (
-            {
+
+        const products = (data.items || []).map((item) => {
+            const imageId = item.fields.image?.sys?.id;
+            const asset = data.includes?.Asset?.find(a => a.sys.id === imageId);
+
+            return {
                 id: item.sys.id,
-                title: item.fields.title,
-                content: item.fields.body,
-                author: item.fields.author,
+                name: item.fields.name,
+                price: item.fields.price,
+                vendor: item.fields.vendor,
+                description: item.fields.description,
                 category: item.fields.category,
-                image: item.fields.image?.fields?.file?.url || null
-            }
-        ));
-        const totalPosts = data.total || 0;
-        const totalPages = Math.ceil(totalPosts / limit);
+                image: `https:${asset.fields.file.url}` || null
+            };
+        });
+        const totalProducts = data.total || 0;
+        const totalPages = Math.ceil(totalProducts / limit);
 
         return {
             props: {
-                posts,
+                products,
                 error: null,
                 category,
                 page,
-                totalPosts,
+                totalProducts,
                 totalPages
             }
         };
 
     } catch(error){
-        console.error('Error fetching posts from Contentful for category', error.message);
+        console.error('Error fetching products from Contentful for category', error.message);
 
         return {
             props: {
-                posts: [],
-                error: 'Failed to fetch posts from Contentful for category: ' + error.message + '',
+                products: [],
+                error: 'Failed to fetch products from Contentful for category: ' + error.message + '',
                 category,
                 page: 1,
-                totalPosts: 0,
+                totalProducts: 0,
                 totalPages: 1
             }
         };
