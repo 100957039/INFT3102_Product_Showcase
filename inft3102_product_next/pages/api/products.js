@@ -19,7 +19,7 @@ export default async function handler(req, res) {
         };
     }
 
-    if (req.method !== 'GET') {
+    if (req.method === 'GET') {
 
         try {
             const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/${ENV}/entries?content_type=product&access_token=${CDA_TOKEN}`;
@@ -28,6 +28,8 @@ export default async function handler(req, res) {
             if (!response.ok) {
                 throw new Error('Failed to fetch Contentful products: ' + response.statusText);
             }
+
+            const data = await response.json();
 
             const products = data.items.slice(0, 5).map((item) => {
                 const imageId = item.fields.image?.sys?.id;
@@ -40,7 +42,7 @@ export default async function handler(req, res) {
                     vendor: item.fields.vendor,
                     description: item.fields.description,
                     category: item.fields.category,
-                    image: `https:${asset.fields.file.url}` || null
+                    image: asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : null
                 };
             });
 

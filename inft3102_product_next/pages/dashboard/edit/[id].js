@@ -8,7 +8,8 @@ export default function EditProduct() {
     const {user, loading} = useContext(AuthContext);
     const {categories} = useContext(CategoryContext);
     const router = useRouter();
-    const id = router.query;
+    const { id } = router.query;
+
 
     const [product, setProduct] = useState(null)
     const [name, setName] = useState('');
@@ -71,8 +72,8 @@ export default function EditProduct() {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
-                    body: JSON.stringify({id, name, price, description, vendor, category}),
-                }
+                },
+                body: JSON.stringify({id, name, price, description, vendor, category})
             });
 
             if(response.ok){
@@ -90,7 +91,7 @@ export default function EditProduct() {
     };
 
     if(loading) return <p>Loading...</p>
-    if(error) return <section className="card"><p> style={{color: 'red'}}</p>{error}</section>
+    if (error) return (<section className="card"><p style={{ color: 'red' }}>{error}</p></section>);
     if(!product) return <p>Loading Product...</p>
 
     return (
@@ -147,7 +148,4 @@ export default function EditProduct() {
         </section>
 
     );
-
-
-
 }
