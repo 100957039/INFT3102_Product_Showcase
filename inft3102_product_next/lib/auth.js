@@ -13,7 +13,7 @@ const users = [
     },
     {
         id: '2',
-        email: 'author@dc.ca',
+        email: 'vendor@dc.ca',
         password: '$2b$10$hLoRMSGjOaahxxYkbcS7ZeY/mKPSJToSyT0/htByOIZYs.ZLueXnG',
         role: 'author'
     }

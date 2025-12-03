@@ -1,11 +1,11 @@
 /* styles/index.css */
 /* Week 7 - Day 1: Uses existing .navbar styles */
 /* Week 9 - Day 1: Added pagination styles */
-/* Week 10 - Day 1: Added styling for select dropdown in PostForm */
-/* Week 10 - Day 2: Added styling for PostFilter component */
-/* Week 11 - Day 1: Perfect alignment for PostForm */
+/* Week 10 - Day 1: Added styling for select dropdown in ProductForm */
+/* Week 10 - Day 2: Added styling for ProductFilter component */
+/* Week 11 - Day 1: Perfect alignment for ProductForm */
 /* Week 11 - Day 2: Added active navigation state + enhanced hover */
-/* Week 12 - Day 1: Added auth form + admin UI styles */
+/* Week 12 - Day 1: Added vend form + admin UI styles */
 
 :root {
     --bg: #ffffff;
@@ -185,17 +185,17 @@ button:focus-visible {
 }
 
 .counter,
-.post-form,
-.post-list,
-.post-filter {
+.product-form,
+.product-list,
+.product-filter {
     display: grid;
     gap: var(--space-2);
 }
 
-/* Week 11 - Day 1: Perfect alignment for PostForm */
-.post-form select,
-.post-form input,
-.post-form button {
+/* Week 11 - Day 1: Perfect alignment for ProductForm */
+.product-form select,
+.product-form input,
+.product-form button {
     width: 100%;
     max-width: 520px;
     margin-bottom: var(--space-2);
@@ -208,26 +208,26 @@ button:focus-visible {
     transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
-.post-form select:hover,
-.post-form input:hover,
-.post-form button:hover {
+.product-form select:hover,
+.product-form input:hover,
+.product-form button:hover {
     background: var(--surface-2);
     border-color: var(--brand);
 }
 
-.post-form select:focus,
-.post-form input:focus,
-.post-form button:focus {
+.product-form select:focus,
+.product-form input:focus,
+.product-form button:focus {
     outline: 3px solid var(--brand);
     outline-offset: 2px;
 }
 
-.post-form button {
+.product-form button {
     cursor: pointer;
     font-weight: 600;
 }
 
-.post-list ul {
+.product-list ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -235,7 +235,7 @@ button:focus-visible {
     gap: var(--space-2);
 }
 
-.post-list li {
+.product-list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -246,7 +246,7 @@ button:focus-visible {
     background: var(--surface);
 }
 
-.post-list>li button {
+.product-list>li button {
     background: transparent;
     border: 1px solid var(--border);
     min-height: 44px;
@@ -276,14 +276,14 @@ img {
     cursor: not-allowed;
 }
 
-/* Week 10 - Day 2: Style post-filter component */
-.post-filter {
+/* Week 10 - Day 2: Style product-filter component */
+.product-filter {
     display: flex;
     gap: var(--space-2);
     align-items: center;
 }
 
-.post-filter select {
+.product-filter select {
     padding: 0.55rem 0.75rem;
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -294,17 +294,17 @@ img {
     transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
-.post-filter select:hover {
+.product-filter select:hover {
     background: var(--surface-2);
     border-color: var(--brand);
 }
 
-.post-filter select:focus {
+.product-filter select:focus {
     outline: 3px solid var(--brand);
     outline-offset: 2px;
 }
 
-.post-filter button {
+.product-filter button {
     min-height: 44px;
 }
 
@@ -388,9 +388,9 @@ img {
         font-size: 0.9rem;
     }
 
-    .post-form input,
-    .post-form select,
-    .post-filter select {
+    .product-form input,
+    .product-form select,
+    .product-filter select {
         width: 100%;
         min-height: 44px;
     }

@@ -1,6 +1,6 @@
 import {PostContext} from "@/components/PostContext";
 import {useContext, useEffect} from "react";
-import PostFilter from "@/components/PostFilter";
+import ProductFilter from "@/components/ProductFilter";
 import PostList from "@/components/PostList";
 
 export default function CategoryPage( {posts, error, category, page, totalPosts, totalPages} ) {
@@ -16,7 +16,7 @@ export default function CategoryPage( {posts, error, category, page, totalPosts,
         <div className="content">
             <section className="card">
                 <h1>Posts in {category}</h1>
-                <PostFilter />
+                <ProductFilter />
                 {error ? (
                     <p role="alert">{error}</p>
                     ) : (

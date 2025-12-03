@@ -2,13 +2,14 @@ import {useContext, useState} from 'react';
 import {useRouter} from "next/router";
 import {CategoryContext} from "@/components/CategoryContext.js";
 
-export default function PostForm() {
+export default function ProductForm() {
 
 
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
-    const [author, setAuthor] = useState('');
-    const [category, setCategory] = useState('Tech');
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
+    const [vendor, setVendor] = useState('');
+    const [category, setCategory] = useState('Fruit');
     const { categories } = useContext(CategoryContext);
     const router = useRouter();
 
@@ -16,38 +17,39 @@ export default function PostForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (title && body && author && category) {
+        if (name && price && description && vendor && category) {
             try{
-                const response = await fetch('/api/posts', {
+                const response = await fetch('/api/products', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({title, body, author, category}),
+                    description: JSON.stringify({name, price, description, vendor, category}),
                 });
 
                 if (!response.ok) {
                     const errText = await response.text();
-                    throw new Error(errText || 'Failed to create post');
+                    throw new Error(errText || 'Failed to create product');
                 }
 
-                setTitle('');
-                setBody('');
-                setAuthor('');
-                setCategory('Tech');
+                setName('');
+                setPrice('');
+                setDescription('');
+                setVendor('');
+                setCategory('Fruit');
 
-                router.push('/blog');
+                router.push('/products');
 
             } catch(err) {
-                console.error('Error submitting post', err.message);
-                alert('Failed to create post: ' + err.message);
+                console.error('Error submitting product', err.message);
+                alert('Failed to create product: ' + err.message);
             }
         }
     };
 
     return (
 
-        <div className="post-form">
-            <form className="post-form" onSubmit={handleSubmit}>
-                <h3>Create a Blog Post</h3>
+        <div className="product-form">
+            <form className="product-form" onSubmit={handleSubmit}>
+                <h3>Create a Product</h3>
 
                 <select value={category} onChange={(e) => setCategory(e.target.value)}>
                     {categories.map(cat => (
@@ -57,27 +59,37 @@ export default function PostForm() {
 
                 <input
                     type="text"
-                    placeholder="Enter Post Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    aria-label="Post Title"
+                    placeholder="Enter Product Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    aria-label="Product Name"
+                />
+
+                <input
+                    type="number"
+                    placeholder="Enter Product Price"
+                    min="0"
+                    step="0.01"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    aria-label="Product Price"
                 />
 
                 <input
                     type="text"
-                    placeholder="Enter Post Body"
-                    onChange={(e) => setBody(e.target.value)}
-                    aria-label="Post Body"
+                    placeholder="Enter Product Description"
+                    onChange={(e) => setDescription(e.target.value)}
+                    aria-label="Product Description"
                 />
 
                 <input
                     type="text"
-                    placeholder="Enter Post Author"
-                    onChange={(e) => setAuthor(e.target.value)}
-                    aria-label="Post Author"
+                    placeholder="Enter Product Vendor"
+                    onChange={(e) => setVendor(e.target.value)}
+                    aria-label="Product Vendor"
                 />
 
-                <button type="submit">Save Post</button>
+                <button type="submit">Save Product</button>
             </form>
         </div>
     );

@@ -2,7 +2,7 @@ import {useContext, useState} from "react";
 import {CategoryContext} from "@/components/CategoryContext";
 import {useRouter} from "next/router";
 
-export default function PostFilter() {
+export default function ProductFilter() {
 
     const {categories} = useContext(CategoryContext);
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -16,8 +16,8 @@ export default function PostFilter() {
 
 
     return (
-        <div className="post-filter">
-            <h3>Filter Posts by Category</h3>
+        <div className="product-filter">
+            <h3>Filter Products by Category</h3>
             <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
                 <option value="">Select a Category</option>
                 {
