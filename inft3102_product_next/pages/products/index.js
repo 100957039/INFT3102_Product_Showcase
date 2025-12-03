@@ -74,7 +74,7 @@ export async function getServerSideProps( {query} ) {
                 vendor: item.fields.vendor,
                 description: item.fields.description,
                 category: item.fields.category,
-                image: `https:${asset.fields.file.url}` || null
+                image: asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : null
             };
         });
 

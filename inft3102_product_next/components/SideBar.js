@@ -11,9 +11,6 @@ export default function SideBar() {
                 <li>
                     <Link href={`/products`}>Products</Link>
                 </li>
-                <li>
-                    <Link href={`/`}>Categories</Link>
-                </li>
             </ul>
         </aside>
     );

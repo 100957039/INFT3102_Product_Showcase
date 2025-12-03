@@ -20,7 +20,7 @@ export default function CategoryPage( {products, error, category, page, totalPro
                 {error ? (
                     <p role="alert">{error}</p>
                     ) : (
-                        <ProductList page={page} totalProducts={totalProducts} totalPages={totalPages} />
+                        <ProductList products={products} page={page} totalProducts={totalProducts} totalPages={totalPages} />
                     )
                 }
             </section>
@@ -49,6 +49,7 @@ export async function getServerSideProps({params, query}) {
             throw new Error('Failed to fetch Contentful products for category');
         }
 
+        const data = await response.json();
         const products = (data.items || []).map((item) => {
             const imageId = item.fields.image?.sys?.id;
             const asset = data.includes?.Asset?.find(a => a.sys.id === imageId);
@@ -60,7 +61,7 @@ export async function getServerSideProps({params, query}) {
                 vendor: item.fields.vendor,
                 description: item.fields.description,
                 category: item.fields.category,
-                image: `https:${asset.fields.file.url}` || null
+                image: asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : null
             };
         });
         const totalProducts = data.total || 0;
