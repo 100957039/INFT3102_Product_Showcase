@@ -31,7 +31,7 @@ export default async function handler(req, res) {
 
             const data = await response.json();
 
-            const products = data.items.slice(0, 5).map((item) => {
+            const products = data.items.map((item) => {
                 const imageId = item.fields.image?.sys?.id;
                 const asset = data.includes?.Asset?.find(a => a.sys.id === imageId);
 
@@ -165,10 +165,11 @@ export default async function handler(req, res) {
                     body: JSON.stringify({
                         fields: {
                             name: {[LOCALE]: name},
-                            price: {[LOCALE]: price},
+                            price: {[LOCALE]: parseFloat(price)},
                             description: {[LOCALE]: description},
                             vendor: {[LOCALE]: vendor},
                             category: {[LOCALE]: category},
+                            image: entry.fields.image
                         }
                     })
                 });
