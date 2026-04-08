@@ -1,0 +1,10 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://github.com/100957039/INFT_3102_Product_Showcase.git
+	fetch = +refs/*:refs/*
+	mirror = true
